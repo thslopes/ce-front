@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestão</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Sistema de Gestão</h1>
+            <p>Plataforma integrada para solicitações, aprovações e decisões executivas</p>
+        </div>
+
+        <div class="tab-navigation">
+            <button class="tab-button active" onclick="showTab('solicitante')">
+                Solicitante
+            </button>
+            <button class="tab-button" onclick="showTab('aprovador')">
+                Aprovador
+            </button>
+            <button class="tab-button" onclick="showTab('financeiro')">
+                Financeiro
+            </button>
+        </div>
+
+        <div id="solicitante" class="tab-content active">
+            <div class="content-section">
+                <h2>Painel do Solicitante</h2>
+                <p>Bem-vindo ao painel do solicitante. Aqui você pode criar e acompanhar suas solicitações.</p>
+                
+                <div class="card">
+                    <h3>Nova Solicitação</h3>
+                    <p>Crie uma nova solicitação para aprovação. Preencha todos os campos obrigatórios e aguarde o processamento.</p>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" onclick="openModal('requestModal')">Criar Solicitação</button>
+                        <button class="btn btn-success">Salvar Rascunho</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Minhas Solicitações</h3>
+                    <p>Acompanhe o status de todas as suas solicitações em andamento.</p>
+                    <ul class="feature-list">
+                        <!-- As solicitações serão carregadas dinamicamente pelo JavaScript -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="aprovador" class="tab-content">
+            <div class="content-section">
+                <h2>Painel do Aprovador</h2>
+                <p>Área dedicada para análise e aprovação de solicitações pendentes.</p>
+                
+                <div class="card">
+                    <h3>Solicitações Pendentes</h3>
+                    <p>Revise e aprove as solicitações que requerem sua autorização.</p>
+                    <ul class="feature-list">
+                        <!-- As solicitações pendentes serão carregadas dinamicamente pelo JavaScript -->
+                    </ul>
+                    <div class="action-buttons">
+                        <button class="btn btn-success" onclick="approveSelectedRequests()">Aprovar Selecionadas</button>
+                        <button class="btn btn-danger" onclick="rejectSelectedRequests()">Rejeitar Selecionadas</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Histórico de Aprovações</h3>
+                    <p>Consulte o histórico completo de suas decisões de aprovação.</p>
+                    <ul class="feature-list">
+                        <!-- O histórico será carregado dinamicamente pelo JavaScript -->
+                    </ul>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary">Ver Histórico Completo</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="financeiro" class="tab-content">
+            <div class="content-section">
+                <h2>Painel Financeiro</h2>
+                <p>Área dedicada para execução de solicitações aprovadas e controle financeiro.</p>
+                
+                <div class="card" id="card-aprovadas">
+                    <h3>Solicitações Aprovadas</h3>
+                    <p>Solicitações que foram aprovadas e estão prontas para execução financeira.</p>
+                    <ul class="feature-list">
+                        <!-- As solicitações aprovadas serão carregadas dinamicamente pelo JavaScript -->
+                    </ul>
+                    <div class="action-buttons">
+                        <button class="btn btn-success" onclick="executeSelectedRequests()">Executar Selecionadas</button>
+                        <button class="btn btn-primary">Solicitar Documentos</button>
+                    </div>
+                </div>
+
+                <div class="card" id="card-execucoes">
+                    <h3>Execuções Realizadas</h3>
+                    <p>Histórico de solicitações já executadas pelo setor financeiro.</p>
+                    <ul class="feature-list">
+                        <!-- As execuções serão carregadas dinamicamente pelo JavaScript -->
+                    </ul>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary">Ver Histórico Completo</button>
+                        <button class="btn btn-success">Gerar Relatório</button>
+                    </div>
+                </div>
+
+                <div class="card" id="card-orcamento">
+                    <h3>Controle Orçamentário</h3>
+                    <p>Acompanhe o controle orçamentário e disponibilidade de recursos.</p>
+                    <ul class="feature-list">
+                        <!-- O controle orçamentário será calculado dinamicamente pelo JavaScript -->
+                    </ul>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary">Atualizar Orçamento</button>
+                        <button class="btn btn-danger">Exportar Relatório</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para Criar Solicitação -->
+    <div id="requestModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Nova Solicitação</h3>
+                <button class="close" onclick="closeModal('requestModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="requestForm">
+                    <div class="form-group">
+                        <label for="descricao">Descrição *</label>
+                        <textarea id="descricao" name="descricao" placeholder="Descreva detalhadamente sua solicitação..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="valor">Valor (R$) *</label>
+                        <input type="text" id="valor" name="valor" placeholder="0,00" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" onclick="closeModal('requestModal')">Cancelar</button>
+                <button class="btn btn-success" onclick="submitRequest()">Criar Solicitação</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
